@@ -6,6 +6,9 @@
     <Authors>Jerome Haltom</Authors>
     <Description>Provides a simple query language across a JSON-compatible object model. Includes a compiler for compiling this query language to Expressions.</Description>
     <Copyright>2019 Jerome Haltom</Copyright>
+    <RepositoryUrl>https://github.com/wasabii/Cogito.Json.Query.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/wasabii/Cogito.Json.Query</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
