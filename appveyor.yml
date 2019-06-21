@@ -17,8 +17,8 @@ before_build:
 
 build:
   verbosity: minimal
-  project: Cogito.Extensions.Configuration.sln
+  project: Cogito.Json.Query.sln
 
 artifacts:
   - path: pkg\*.nupkg
-    name: Cogito.Extensions.Configuration
+    name: Cogito.Json.Query
