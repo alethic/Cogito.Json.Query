@@ -901,6 +901,46 @@ namespace FileAndServe.Efm.Tests.Util.Json
             r.Should().Be(true);
         }
 
+        [TestMethod]
+        public void Can_build_predicate_with_escaped_escape()
+        {
+            var b = new JsonQueryCompiler();
+
+            var d = new Dictionary<string, string>()
+            {
+                ["Foo\\Bar"] = "value"
+            };
+
+            var p = Expression.Parameter(d.GetType());
+            var e = b.Predicate(p, new JObject()
+            {
+                ["Foo\\\\Bar"] = "value"
+            });
+
+            var r = (bool)e.Compile().DynamicInvoke(d);
+            r.Should().Be(true);
+        }
+
+        [TestMethod]
+        public void Can_build_predicate_with_escaped_escape_bad()
+        {
+            var b = new JsonQueryCompiler();
+
+            var d = new Dictionary<string, string>()
+            {
+                ["Foo\\Bar"] = "value"
+            };
+
+            var p = Expression.Parameter(d.GetType());
+            var e = b.Predicate(p, new JObject()
+            {
+                ["Foo\\Bar"] = "value"
+            });
+
+            var r = (bool)e.Compile().DynamicInvoke(d);
+            r.Should().Be(false);
+        }
+
     }
 
 }
