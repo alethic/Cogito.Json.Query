@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Description>Provides a simple query language across a JSON-compatible object model. Includes a compiler for compiling this query language to Expressions.</Description>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Cogito.Core" Version="3.1.36" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="System.Memory" Version="4.5.4" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Cogito.Core" Version="3.1.36" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="System.Memory" Version="4.5.4" />
+    </ItemGroup>
 
 </Project>
