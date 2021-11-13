@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 using Cogito.Json.Query.Internal;
@@ -469,7 +470,60 @@ namespace Cogito.Json.Query
 
         Expression BuildProperty(Expression target, string key, JToken filter)
         {
-            return BuildProperty(target, Regex.Split(key, @"(?<!\\)[.]").Select(i => i.Replace(@"\.", ".").Replace(@"\\", @"\")).ToArray(), filter);
+            return BuildProperty(target, ParsePropertyPath(key).ToArray(), filter);
+        }
+
+        /// <summary>
+        /// Attempt to 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        IEnumerable<string> ParsePropertyPath(string text)
+        {
+            var cur = new StringBuilder(4);
+            var esc = false;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                var c = text[i];
+
+                // encounted new escape sequence, and not in escape mode, change to escape mode
+                if (c == '\\' && esc == false)
+                {
+                    esc = true;
+                    continue;
+                }
+
+                // encountered escape sequence, but in escape mode, add character and stop escape mode
+                if (c == '\\' && esc == true)
+                {
+                    cur.Append('\\');
+                    esc = false;
+                    continue;
+                }
+
+                // encountered splitter, and in escape mode, so append and exit escape mode
+                if (c == '.' && esc == true)
+                {
+                    cur.Append('.');
+                    esc = false;
+                    continue;
+                }
+
+                // encountered splitter but not in escape mode, so emit split
+                if (c == '.' && esc == false)
+                {
+                    yield return cur.ToString();
+                    cur = new StringBuilder(4);
+                    continue;
+                }
+
+                // all other text gets appended
+                cur.Append(c);
+            }
+
+            // whatever remains is a new block
+            yield return cur.ToString();
         }
 
         Expression BuildProperty(Expression target, string[] path, JToken filter)

@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Cogito.Core" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
 </Project>
