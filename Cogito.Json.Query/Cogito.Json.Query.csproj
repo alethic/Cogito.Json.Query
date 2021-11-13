@@ -6,14 +6,14 @@
     <Authors>Jerome Haltom</Authors>
     <Description>Provides a simple query language across a JSON-compatible object model. Includes a compiler for compiling this query language to Expressions.</Description>
     <Copyright>2019 Jerome Haltom</Copyright>
-    <RepositoryUrl>https://github.com/wasabii/Cogito.Json.Query.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/alethic/Cogito.Json.Query.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/wasabii/Cogito.Json.Query</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/alethic/Cogito.Json.Query</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cogito.Core" Version="3.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Cogito.Core" Version="3.1.36" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
