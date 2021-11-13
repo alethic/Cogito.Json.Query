@@ -1,0 +1,16 @@
+<Project>
+    <PropertyGroup>
+        <Authors>Jerome Haltom</Authors>
+        <Company>Alethic Solutions</Company>
+        <RepositoryUrl>https://github.com/alethic/Cogito.Json.Query</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>kademlia kvs dht</PackageTags>
+        <PackageProjectUrl>https://github.com/alethic/Cogito.Json.Query</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
+        <LangVersion>8.0</LangVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+</Project>
