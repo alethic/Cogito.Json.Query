@@ -469,7 +469,7 @@ namespace Cogito.Json.Query
 
         Expression BuildProperty(Expression target, string key, JToken filter)
         {
-            return BuildProperty(target, Regex.Split(key, @"(?<!\\)\."), filter);
+            return BuildProperty(target, Regex.Split(key, @"(?<!\\)[.]").Select(i => i.Replace(@"\.", ".").Replace(@"\\", @"\")).ToArray(), filter);
         }
 
         Expression BuildProperty(Expression target, string[] path, JToken filter)
