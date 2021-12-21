@@ -550,31 +550,20 @@ namespace Cogito.Json.Query
 
         Expression BuildComparator(Expression target, string comparator, JToken filter)
         {
-            switch (comparator)
+            return comparator switch
             {
-                case "is":
-                    return BuildIs(target, filter);
-                case "in":
-                    return BuildIn(target, filter);
-                case "contains":
-                    return BuildContains(target, filter);
-                case "lt":
-                    return BuildLessThan(target, filter);
-                case "gt":
-                    return BuildGreaterThan(target, filter);
-                case "lte":
-                    return BuildLessThanOrEqual(target, filter);
-                case "gte":
-                    return BuildGreaterThanOrEqual(target, filter);
-                case "not":
-                    return BuildNot(target, filter);
-                case "and":
-                    return BuildAnd(target, filter);
-                case "or":
-                    return BuildOr(target, filter);
-                default:
-                    throw new NotSupportedException($"Unsupported comparator: {comparator}.");
-            }
+                "is" => BuildIs(target, filter),
+                "in" => BuildIn(target, filter),
+                "contains" => BuildContains(target, filter),
+                "lt" => BuildLessThan(target, filter),
+                "gt" => BuildGreaterThan(target, filter),
+                "lte" => BuildLessThanOrEqual(target, filter),
+                "gte" => BuildGreaterThanOrEqual(target, filter),
+                "not" => BuildNot(target, filter),
+                "and" => BuildAnd(target, filter),
+                "or" => BuildOr(target, filter),
+                _ => throw new NotSupportedException($"Unsupported comparator: {comparator}."),
+            };
         }
 
         /// <summary>
@@ -736,7 +725,10 @@ namespace Cogito.Json.Query
         /// <returns></returns>
         Expression BuildNot(Expression target, JToken filter)
         {
-            throw new NotImplementedException();
+            if (filter.Type != JTokenType.Object)
+                throw new NotImplementedException("'not' operator must be a filter object.");
+
+            return Expression.Not(Build(target, (JObject)filter));
         }
 
         /// <summary>
@@ -812,25 +804,17 @@ namespace Cogito.Json.Query
         /// <returns></returns>
         object JTokenToValue(JToken token)
         {
-            switch (token.Type)
+            return token.Type switch
             {
-                case JTokenType.Boolean:
-                    return (bool)token;
-                case JTokenType.Float:
-                    return (float)token;
-                case JTokenType.Integer:
-                    return (long)token;
-                case JTokenType.Null:
-                    return null;
-                case JTokenType.String:
-                    return (string)token;
-                case JTokenType.Array:
-                    return ((JArray)token).Select(i => JTokenToValue(i)).ToArray();
-                case JTokenType.Object:
-                    return token;
-                default:
-                    throw new NotSupportedException("Unsupported JToken type.");
-            }
+                JTokenType.Boolean => (bool)token,
+                JTokenType.Float => (float)token,
+                JTokenType.Integer => (long)token,
+                JTokenType.Null => null,
+                JTokenType.String => (string)token,
+                JTokenType.Array => ((JArray)token).Select(i => JTokenToValue(i)).ToArray(),
+                JTokenType.Object => token,
+                _ => throw new NotSupportedException("Unsupported JToken type."),
+            };
         }
 
         /// <summary>
@@ -840,24 +824,18 @@ namespace Cogito.Json.Query
         /// <returns></returns>
         Type JTokenToType(JToken token)
         {
-            switch (token.Type)
+            return token.Type switch
             {
-                case JTokenType.Boolean:
-                    return typeof(bool?);
-                case JTokenType.Float:
-                    return typeof(float?);
-                case JTokenType.Integer:
-                    return typeof(long?);
-                case JTokenType.String:
-                    return typeof(string);
-                case JTokenType.Array:
-                    return typeof(Array);
-                case JTokenType.Null:
-                    return null;
-                default:
-                    throw new NotSupportedException("Unsupported JToken type.");
-            }
+                JTokenType.Boolean => typeof(bool?),
+                JTokenType.Float => typeof(float?),
+                JTokenType.Integer => typeof(long?),
+                JTokenType.String => typeof(string),
+                JTokenType.Array => typeof(Array),
+                JTokenType.Null => null,
+                _ => throw new NotSupportedException("Unsupported JToken type."),
+            };
         }
 
     }
+
 }

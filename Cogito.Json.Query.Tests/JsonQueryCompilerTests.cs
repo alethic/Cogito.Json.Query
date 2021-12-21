@@ -941,6 +941,58 @@ namespace FileAndServe.Efm.Tests.Util.Json
             r.Should().Be(false);
         }
 
+        [TestMethod]
+        public void Can_build_simple_not()
+        {
+            var b = new JsonQueryCompiler();
+
+            var d = new Dictionary<string, string>()
+            {
+                ["Property"] = "value"
+            };
+
+            var p = Expression.Parameter(d.GetType());
+            var e = b.Predicate(p, new JObject()
+            {
+                ["Property"] = new JObject()
+                {
+                    ["$not"] = new JObject()
+                    {
+                        ["$is"] = "value",
+                    }
+                }
+            });
+
+            var r = (bool)e.Compile().DynamicInvoke(d);
+            r.Should().Be(false);
+        }
+
+        [TestMethod]
+        public void Can_build_simple_not_reverse()
+        {
+            var b = new JsonQueryCompiler();
+
+            var d = new Dictionary<string, string>()
+            {
+                ["Property"] = "value"
+            };
+
+            var p = Expression.Parameter(d.GetType());
+            var e = b.Predicate(p, new JObject()
+            {
+                ["Property"] = new JObject()
+                {
+                    ["$not"] = new JObject()
+                    {
+                        ["$is"] = "value1",
+                    }
+                }
+            });
+
+            var r = (bool)e.Compile().DynamicInvoke(d);
+            r.Should().Be(true);
+        }
+
     }
 
 }
